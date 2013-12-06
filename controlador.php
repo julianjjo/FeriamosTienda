@@ -1,12 +1,13 @@
 <?php
-function publicar_producto_action()
+function publicar_producto_vendo_action()
 {
     $ingreso=ingreso_usuario();
     if($ingreso==true){
+        set_publicacion_vendo();
         require 'templates/sessionusuario.php';
-         $categorias = get_todas_categorias();
+        $categorias = get_todas_categorias();
         $tipos = get_todos_tipos();
-        require 'templates/guardarproducto.php';
+        require 'templates/publicarvendo.php';
     }
     else{
         header("Location: ./");

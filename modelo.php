@@ -13,6 +13,29 @@ function cerrar_conexion_basededatos($conexion)
 {
     mysql_close($conexion);
 }
+
+function set_publicacion_vendo(){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){    
+        $conexion = abrir_conexion_basededatos();        
+        $fecha_actual = date("Y-m-d");
+        $nueva_publicacion_vendo="INSERT INTO usuario VALUES ('','$nombre','$apellidos','$email','$salt','$contrasena','$telefono','$direccion','1')";
+        if($_FILES["foto1"]["error"]=="0"){
+            foreach ($_FILES["foto1"] as $clave => $valor) {
+                echo "Propiedad: $clave -- Valor: $valor"."<br>";
+            }
+        }  
+        if($_FILES["foto2"]["error"]=="0"){
+            foreach ($_FILES["foto2"] as $clave => $valor) {
+                echo "Propiedad: $clave -- Valor: $valor"."<br>";
+            }
+        }
+        if($_FILES["foto3"]["error"]=="0"){
+            foreach ($_FILES["foto3"] as $clave => $valor) {
+                echo "Propiedad: $clave -- Valor: $valor"."<br>";
+            }
+        }
+    }
+}
  
 function get_todas_categorias()
 {
@@ -57,8 +80,7 @@ function get_post_by_id($id)
 }
 
 function set_usuario(){
-    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-        
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){        
         $conexion = abrir_conexion_basededatos();
         $contra=$_POST['password'];
         $salt = md5(uniqid(time(), true));

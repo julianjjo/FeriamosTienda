@@ -4,5 +4,3 @@
         <button type="button" onclick="location.href='/registro'" class="btn btn-primary">Registrese</button>
     </form> 
 <?php $session = ob_get_clean() ?>
- 
-<?php include 'base.php' ?>

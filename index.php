@@ -3,7 +3,7 @@
  
 // carga e inicia algunas librerías globales
 require_once 'modelo.php';
-require_once 'controladores.php';
+require_once 'controlador.php';
 // encamina la petición internamente
 $uri = $_SERVER['REQUEST_URI'];
 if ($uri == '/') {
@@ -12,8 +12,8 @@ if ($uri == '/') {
 elseif ($uri == '/show' && isset($_GET['id'])) {
     show_action($_GET['id']);
 } 
-elseif($uri == '/crearproducto'){
-	publicar_producto_action();
+elseif($uri == '/publicacionvendo'){
+	publicar_producto_vendo_action();
 }
 elseif($uri == '/login'){
 	login_action();
