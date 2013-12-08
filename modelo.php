@@ -36,6 +36,17 @@ function set_publicacion_vendo(){
         }
     }
 }
+
+function get_anios(){
+    $anio_actual=date("Y");
+    $pocision = 0;
+    $contador=$anio_actual;
+    for($contador;$contador>=($anio_actual-100);$contador--){
+         $anios[$pocision]=$contador;
+         $pocision++;
+    }
+    return $anios;
+}
  
 function get_todas_categorias()
 {
@@ -51,7 +62,7 @@ function get_todas_categorias()
     return $categorias;
 }
 
-function get_todos_tipos()
+function get_todos_sectores()
 {
     $conexion = abrir_conexion_basededatos();
 

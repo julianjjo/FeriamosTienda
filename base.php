@@ -24,9 +24,9 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="./">Home</a></li>
-            <li><a href="#about">Vendemos</a></li>
-            <li><a href="#contact">Compramos</a></li>
+            <li class="active"><a href="./">Inicio</a></li>
+            <li><a href="#about">Vender</a></li>
+            <li><a href="#contact">Comprar</a></li>
             <li><a href="#contact">Condiciones</a></li>
           </ul>                     
           <ul class="nav navbar-nav navbar-right">

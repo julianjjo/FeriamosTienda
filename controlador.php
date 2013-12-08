@@ -5,8 +5,9 @@ function publicar_producto_vendo_action()
     if($ingreso==true){
         set_publicacion_vendo();
         require 'templates/sessionusuario.php';
+        $anios=get_anios();
         $categorias = get_todas_categorias();
-        $tipos = get_todos_tipos();
+        $sectores = get_todos_sectores();
         require 'templates/publicarvendo.php';
     }
     else{

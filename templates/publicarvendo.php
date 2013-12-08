@@ -5,17 +5,26 @@
     .publicar{
         max-width: 200;
     }
+    .title{
+        text-align: center;
+    }
 </style>
 <?php $estilo = ob_get_clean() ?>
 
 <?php ob_start() ?>
     <div class="container publicar">
-        <div class="well">
-            <h1>Publique lo que desea vender</h1><br><br>           
+        <div class="container title page-header">        
+            <h1>Publique lo que desea vender</h1>
+        </div>
+        <div class="well">        
             <form role="form" action="/publicacionvendo" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label>Nombre del Producto</label>
+                    <label>Nombre</label>
                     <input type="text" placeholder="Nombre" name="nombre" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Marca</label>
+                    <input type="text" placeholder="Marca" name="marca" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Seleccione la categoria</label>
@@ -26,56 +35,24 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Seleccione el tipo</label>
-                    <select class="form-control" name="tipo">
-                        <?php foreach ($tipos as $tipo): ?>
-                            <option value="<?php echo $tipo['nombre_tipo'] ?>"><?php echo utf8_encode($tipo['nombre_tipo']) ?></option>
+                    <label>Seleccione el sector</label>
+                    <select class="form-control" name="sector">
+                        <?php foreach ($sectores as $tipo): ?>
+                            <option value="<?php echo $tipo['id'] ?>"><?php echo utf8_encode($tipo['nombre_tipo']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Precio del Producto</label>
-                    <input type="text" placeholder="Precio" name="precio" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Unidades del producto</label>
-                    <input type="number" placeholder="Unidades" name="unidades" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <textarea class="form-control" rows="4" name="descripcion"> </textarea>
-                </div>
-                <div class="form-group">
-                    <label>Fecha de Fabricación</label>
-                    <input type="date" name="fecha" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Modelo del Producto</label>
+                    <label>Modelo</label>
                     <input type="text" placeholder="Modelo" name="modelo" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label>Departamento</label>
-                    <select class="form-control" name="departamento">
-                        <?php foreach ($departamentos as $departamento): ?>
-                            <option value="<?php echo $departamento['nombre_departamento'] ?>"><?php echo utf8_encode($nombre_departamento['nombre_departamento']) ?></option>
+                    <label>Año de Fabricación</label>
+                    <select class="form-control" name="año_fabricacion">
+                        <?php foreach ($anios as $anio): ?>
+                            <option value="<?php echo $anio ?>"><?php echo $anio ?></option>
                         <?php endforeach; ?>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label>Ciudad</label>
-                    <select class="form-control" name="ciudad">
-                        <?php foreach ($ciudades as $ciudad): ?>
-                            <option value="<?php echo $ciudad['nombre_ciudad'] ?>"><?php echo utf8_encode($ciudad['nombre_ciudad']) ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Dirrección</label>
-                    <input type="text" placeholder="Dirrección" name="dirreccion" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Otra informacion</label>
-                    <textarea class="form-control" rows="4" name="otra_informacion"> </textarea>
                 </div>
                 <div class="form-group">
                     <label>Estado del producto</label>
@@ -85,10 +62,42 @@
                             <option value="regular">Regular</option>
                             <option value="malo">Malo</option>
                     </select>
-                </div>                
+                </div>  
                 <div class="form-group">
-                    <label>Años de uso</label>
-                    <input type="number" placeholder="Años de uso" name="uso" class="form-control">
+                    <label>Informacion Adicional</label>
+                    <textarea class="form-control" rows="4" name="otra_informacion"> </textarea>
+                </div>
+                <div class="form-group">
+                    <label>Unidades del producto</label>
+                    <input type="number" placeholder="Unidades" name="unidades" class="form-control">
+                </div>    
+                <div class="form-group">
+                    <label>Precio del Producto</label>
+                    <input type="text" placeholder="Precio" name="precio" class="form-control">
+                </div>
+                <br>
+                <h3>Ubicacion del producto</h3><br>
+                <div class="form-group">
+                    <label>Departamento</label>
+                    <select class="form-control" name="departamento">
+                        <option value="cundinamarca">Cundinamarca</option>
+                        <?php foreach ($departamentos as $departamento): ?>
+                            <option value="<?php echo $departamento['nombre_departamento'] ?>"><?php echo utf8_encode($nombre_departamento['nombre_departamento']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ciudad</label>
+                    <select class="form-control" name="ciudad">
+                        <option value="fusagasuga">Fusagasuga</option>
+                        <?php foreach ($ciudades as $ciudad): ?>
+                            <option value="<?php echo $ciudad['nombre_ciudad'] ?>"><?php echo utf8_encode($ciudad['nombre_ciudad']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Dirrección</label>
+                    <input type="text" placeholder="Dirrección" name="dirreccion" class="form-control">
                 </div><br>
                 <h3>Fotografias del producto</h3><br>
                     <input type="file" name="foto1"><br>
