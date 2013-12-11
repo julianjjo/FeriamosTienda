@@ -6,11 +6,13 @@ require_once 'modelo.php';
 require_once 'controlador.php';
 // encamina la petición internamente
 $uri = $_SERVER['REQUEST_URI'];
+$urls = explode('?', $uri);
+$uri = $urls[0];
 if ($uri == '/') {
     home_action();
 } 
-elseif ($uri == '/show' && isset($_GET['id'])) {
-    show_action($_GET['id']);
+elseif ($uri == '/vender' && isset($_GET['id2']) && isset($_GET['id2'])) {	
+    publicaciones_por_id_categoria_action($_GET['id1'],$_GET['id2']);
 } 
 elseif($uri == '/publicacionvendo'){
 	publicar_producto_vendo_action();
@@ -29,6 +31,9 @@ elseif($uri == '/registrado'){
 }
 elseif($uri == '/cerrarsesion'){
 	cerrar_sesion_action();
+}
+elseif($uri == '/vender'){
+	vendo_action();
 }
 else {
     header('Status: 404 Not Found');

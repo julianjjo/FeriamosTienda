@@ -1,21 +1,9 @@
 <?php $title = 'Publicar Producto Vendemos' ?>
- 
-<?php ob_start() ?>
-<style type="text/css">
-    .publicar{
-        max-width: 200;
-    }
-    .title{
-        text-align: center;
-    }
-</style>
-<?php $estilo = ob_get_clean() ?>
+
 
 <?php ob_start() ?>
-    <div class="container publicar">
-        <div class="container title page-header">        
-            <h1>Publique lo que desea vender</h1>
-        </div>
+    <div class="container publicar">      
+        <h1 class="text-center">Publique lo que desea vender</h1><br>
         <div class="well">        
             <form role="form" action="/publicacionvendo" method="post" enctype="multipart/form-data">
                 <div class="form-group">
@@ -30,7 +18,7 @@
                     <label>Seleccione la categoria</label>
                     <select class="form-control" name="categoria">
                         <?php foreach ($categorias as $categoria): ?>
-                            <option value="<?php echo $categoria['nombre_categoria'] ?>"><?php echo utf8_encode($categoria['nombre_categoria']) ?></option>
+                            <option value="<?php echo $categoria['id_categoria'] ?>"><?php echo utf8_encode($categoria['nombre_categoria']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -38,7 +26,7 @@
                     <label>Seleccione el sector</label>
                     <select class="form-control" name="sector">
                         <?php foreach ($sectores as $tipo): ?>
-                            <option value="<?php echo $tipo['id'] ?>"><?php echo utf8_encode($tipo['nombre_tipo']) ?></option>
+                            <option value="<?php echo $tipo['id_tipo'] ?>"><?php echo utf8_encode($tipo['nombre_tipo']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -48,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label>Año de Fabricación</label>
-                    <select class="form-control" name="año_fabricacion">
+                    <select class="form-control" name="anio_fabricacion">
                         <?php foreach ($anios as $anio): ?>
                             <option value="<?php echo $anio ?>"><?php echo $anio ?></option>
                         <?php endforeach; ?>
@@ -56,11 +44,11 @@
                 </div>
                 <div class="form-group">
                     <label>Estado del producto</label>
-                    <select class="form-control" name="categoria">
-                            <option value="excelente">Excelente</option>
-                            <option value="bueno">Bueno</option>
-                            <option value="regular">Regular</option>
-                            <option value="malo">Malo</option>
+                    <select class="form-control" name="estado">
+                            <option value="Excelente">Excelente</option>
+                            <option value="Bueno">Bueno</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Malo">Malo</option>
                     </select>
                 </div>  
                 <div class="form-group">
@@ -68,11 +56,11 @@
                     <textarea class="form-control" rows="4" name="otra_informacion"> </textarea>
                 </div>
                 <div class="form-group">
-                    <label>Unidades del producto</label>
+                    <label>Unidades</label>
                     <input type="number" placeholder="Unidades" name="unidades" class="form-control">
                 </div>    
                 <div class="form-group">
-                    <label>Precio del Producto</label>
+                    <label>Precio de venta</label>
                     <input type="text" placeholder="Precio" name="precio" class="form-control">
                 </div>
                 <br>
@@ -102,7 +90,9 @@
                 <h3>Fotografias del producto</h3><br>
                     <input type="file" name="foto1"><br>
                     <input type="file" name="foto2"><br>
-                    <input type="file" name="foto3"><br>
+                    <input type="file" name="foto3"><br>                    
+                    <small>Las fotografias deben estar en formato jpg, jpeg o png.</small>
+                <br>
                 <br>                
                 <input type="submit" value="Publicar producto" class="btn btn-primary"/><br><br> 
             </form>

@@ -59,4 +59,34 @@ function usuario_registrado_action(){
 	require 'templates/usuarioregistrado.php';
 }
 
+function vendo_action(){
+     $ingreso=ingreso_usuario();
+    if($ingreso==true){
+        require 'templates/sessionusuario.php';
+    }
+    else{
+        require 'templates/cajalogueo.php';
+    }
+    $categorias = get_todas_categorias();
+    $publicaciones=get_ultimas_publicaciones_vendo();
+    require 'templates/vender.php';
+}
+
+function publicaciones_por_id_categoria_action($id1,$id2){
+     $ingreso=ingreso_usuario();
+    if($ingreso==true){
+        require 'templates/sessionusuario.php';
+    }
+    else{
+        require 'templates/cajalogueo.php';
+    }
+    $cantidad = get_cantidad_productos_categoria($id2);
+    $catidad_posicion = get_cantidad_de_posiciones($cantidad);
+    $posicion_publicacion = get_posicion_publicacion_por_categoria($id1);
+    $categoria_id = get_categoria_por_id($id2);
+    $categorias = get_todas_categorias();
+    $publicaciones=get_publicaciones_vendo_por_id_categoria($id2);
+    require 'templates/vender_id_categoria.php';
+}
+
 ?>
