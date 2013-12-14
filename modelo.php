@@ -14,6 +14,12 @@ function cerrar_conexion_basededatos($conexion)
     mysql_close($conexion);
 }
 
+function convert_num ($num)
+{
+    $num=strrev(substr(chunk_split(strrev($num), 3, '.'), 0, -1));
+    return $num;
+}
+
 function set_publicacion_vendo(){
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){    
         session_start();
@@ -37,6 +43,7 @@ function set_publicacion_vendo(){
         $nueva_publicacion_vendo="INSERT INTO producto VALUES ('','$categoria','$sector','$id_vendedor','$nombre','$precio','$unidades','$modelo','$marca','Colombia','$departamento','$ciudad','$dirreccion','$otra_informacion','$estado','$anio_fabricacion','$fecha_actual','1')";
         mysql_query($nueva_publicacion_vendo,$conexion);
         $id_producto=mysql_insert_id();
+        $contador = 0;
         if($_FILES["foto1"]["error"]=="0"){
             if($_FILES["foto1"]["type"]=="image/jpeg"||$_FILES["foto1"]["type"]=="image/png"){                
                 $foto = $_FILES["foto1"]["tmp_name"];
@@ -52,6 +59,7 @@ function set_publicacion_vendo(){
             else{
                 echo "El formato no es correcto";
             }   
+            $contador++;
         }  
         if($_FILES["foto2"]["error"]=="0"){
             if($_FILES["foto2"]["type"]=="image/jpeg"||$_FILES["foto2"]["type"]=="image/png"){
@@ -68,6 +76,7 @@ function set_publicacion_vendo(){
             else{
                 echo "El formato no es correcto";
             }
+            $contador++;
         }
         if($_FILES["foto3"]["error"]=="0"){
             if($_FILES["foto3"]["type"]=="image/jpeg"||$_FILES["foto3"]["type"]=="image/png"){
@@ -84,6 +93,12 @@ function set_publicacion_vendo(){
             else{
                 echo "El formato no es correcto";
             }
+            $contador++;
+        }
+        if($contador==0){
+            $nofoto="fotos/foto-no-disponible.jpg";
+            $consulta_foto3 = "INSERT INTO Foto VALUES ('','$id_producto','$nofoto')";
+            mysql_query($consulta_foto3,$conexion);
         }
         cerrar_conexion_basededatos($conexion);
     }
@@ -91,11 +106,11 @@ function set_publicacion_vendo(){
 
 function get_anios(){
     $anio_actual=date("Y");
-    $pocision = 0;
+    $posicion = 0;
     $contador=$anio_actual;
     for($contador;$contador>=($anio_actual-100);$contador--){
-         $anios[$pocision]=$contador;
-         $pocision++;
+         $anios[$posicion]=$contador;
+         $posicion++;
     }
     return $anios;
 }
@@ -145,7 +160,7 @@ function get_post_by_id($id)
 function get_ultimas_publicaciones_vendo(){
     $conexion = abrir_conexion_basededatos();
 
-    $ultimas_publicaciones_vendo = mysql_query('SELECT pf.*, f.* FROM vista_producto_vendo_por_fecha pf INNER JOIN vista_una_foto AS f ON pf.id_producto=f.id_producto LIMIT 8',$conexion);
+    $ultimas_publicaciones_vendo = mysql_query("SELECT pf.*, f.* FROM vista_producto_vendo_por_fecha pf INNER JOIN vista_una_foto AS f ON pf.id_producto=f.id_producto AND siVendo='1' LIMIT 8",$conexion);
 
     $publicaciones = array();
     while ($row = mysql_fetch_assoc($ultimas_publicaciones_vendo)) {
@@ -181,6 +196,31 @@ function get_cantidad_productos_categoria($id_categoria){
     return $cantidad;
 }
 
+function get_producto_por_id($id_producto){
+    $conexion = abrir_conexion_basededatos();
+
+    $producto_por_id = mysql_query("SELECT * FROM producto WHERE id_producto='$id_producto'",$conexion);
+    $producto = mysql_fetch_array($producto_por_id);
+
+    cerrar_conexion_basededatos($conexion);
+ 
+    return $producto;
+}
+
+function get_fotos_por_id_producto($id_producto){
+    $conexion = abrir_conexion_basededatos();
+
+    $fotos_por_id_producto = mysql_query("SELECT * FROM Foto WHERE id_producto='$id_producto'",$conexion);
+    
+    $fotos = array();
+    while ($row = mysql_fetch_assoc($fotos_por_id_producto)) {
+        $fotos[] = $row;
+    }
+    cerrar_conexion_basededatos($conexion);
+ 
+    return $fotos;
+}
+
 function get_cantidad_de_posiciones($cantidad){
     $cantidad_posiciones = $cantidad/10; 
     if($cantidad_posiciones%10>=0){
@@ -189,15 +229,33 @@ function get_cantidad_de_posiciones($cantidad){
     return $cantidad_posiciones;
 }
 
+function cantidad_por_publicacion($cantidad,$cantidad_por_poscicion){
+    $cantidad_por_poscicion = $cantidad_por_poscicion+10;
+    $cantidad = $cantidad - $cantidad_por_poscicion; 
+    if($cantidad<0){
+        $cantidad_por_poscicion=$cantidad_por_poscicion+$cantidad;
+    }
+    return $cantidad_por_poscicion;
+}
+
+function cantidad_anterior_por_publicacion($cantidad,$cantidad_por_poscicion){
+    $cantidad = $cantidad - $cantidad_por_poscicion; 
+    if($cantidad<0){
+        $cantidad_por_poscicion=$cantidad_por_poscicion+$cantidad;
+    }
+    $cantidad_por_poscicion++;
+    return $cantidad_por_poscicion;
+}
+
 function get_posicion_publicacion_por_categoria($id_posicion){
     $cantidad_poscicion = $id_posicion * 10;
 
     return $cantidad_poscicion;
 }
 
-function get_publicaciones_vendo_por_id_categoria($id_categoria){
+function get_publicaciones_vendo_por_id_categoria($id_categoria,$posicion){
     $conexion = abrir_conexion_basededatos();
-    $publicaciones_por_id_categoria = mysql_query("SELECT pf.*, f.* FROM vista_producto_vendo_por_fecha AS pf INNER JOIN vista_una_foto AS f ON pf.id_producto=f.id_producto AND id_categoria='$id_categoria'",$conexion);
+    $publicaciones_por_id_categoria = mysql_query("SELECT pf.*, f.* FROM vista_producto_vendo_por_fecha AS pf INNER JOIN vista_una_foto AS f ON pf.id_producto=f.id_producto AND id_categoria='$id_categoria' AND siVendo='1' LIMIT $posicion,10",$conexion);
 
     $publicaciones = array();
     while ($row = mysql_fetch_assoc($publicaciones_por_id_categoria)) {

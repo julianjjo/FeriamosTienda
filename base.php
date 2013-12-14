@@ -7,9 +7,12 @@
     <script type="text/javascript" src="../js/jquery-2.0.3.js"></script>
     <script type="text/javascript" src="../js/validaciones.js"></script>
     <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <script src="js/jquery.desoslide.min.js"></script>
+    <script src="/js/galeria.js"></script>
     <?php echo $estilo ?>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="../css/main.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="css/jquery.desoslide.css" />
     </head>
     <body>
     <div class="navbar navbar-inverse navbar-fixed-top">

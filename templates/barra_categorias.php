@@ -1,5 +1,5 @@
 <?php ob_start() ?>
-  <div class="col-xs-12 col-md-3 well">
+  <div class="col-xs-12 col-md-3 well" role="complementary">
     <ul class="nav nav-pills nav-stacked">
       <li>
         <?php foreach ($categorias as $categoria): ?>

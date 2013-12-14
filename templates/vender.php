@@ -19,7 +19,7 @@
     <h1 class="text-center">Ultimas publicaciones</h1>
     <?php foreach ($publicaciones as $publicacion): ?>
       <div class="list-group">
-        <a href="#" class="list-group-item">
+        <a href="./publicacionvendo?id=<?php echo $publicacion['id_producto']?>" class="list-group-item">
           <div class="media">
               <img class="media-object pull-left imagenes img-thumbnail" src="<?php echo $publicacion['path'] ?>">
             <div class="media-body">

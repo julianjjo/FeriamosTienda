@@ -14,6 +14,9 @@ if ($uri == '/') {
 elseif ($uri == '/vender' && isset($_GET['id2']) && isset($_GET['id2'])) {	
     publicaciones_por_id_categoria_action($_GET['id1'],$_GET['id2']);
 } 
+elseif($uri == '/publicacionvendo' && isset($_GET['id'])){
+	publicacion_por_id_producto($_GET['id']);
+}
 elseif($uri == '/publicacionvendo'){
 	publicar_producto_vendo_action();
 }

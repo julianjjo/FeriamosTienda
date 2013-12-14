@@ -73,7 +73,7 @@ function vendo_action(){
 }
 
 function publicaciones_por_id_categoria_action($id1,$id2){
-     $ingreso=ingreso_usuario();
+    $ingreso=ingreso_usuario();
     if($ingreso==true){
         require 'templates/sessionusuario.php';
     }
@@ -82,11 +82,27 @@ function publicaciones_por_id_categoria_action($id1,$id2){
     }
     $cantidad = get_cantidad_productos_categoria($id2);
     $catidad_posicion = get_cantidad_de_posiciones($cantidad);
-    $posicion_publicacion = get_posicion_publicacion_por_categoria($id1);
+    $cantidad_por_posicion = get_posicion_publicacion_por_categoria($id1);
+    $cantidad_por_publicacion=cantidad_por_publicacion($cantidad,$cantidad_por_posicion);
+    $cantidad_anterior_por_publicacion=cantidad_anterior_por_publicacion($cantidad,$cantidad_por_posicion);
     $categoria_id = get_categoria_por_id($id2);
     $categorias = get_todas_categorias();
-    $publicaciones=get_publicaciones_vendo_por_id_categoria($id2);
+    $publicaciones=get_publicaciones_vendo_por_id_categoria($id2,$cantidad_por_posicion);
     require 'templates/vender_id_categoria.php';
+}
+
+function publicacion_por_id_producto($id){
+    $ingreso=ingreso_usuario();
+    if($ingreso==true){
+        require 'templates/sessionusuario.php';
+    }
+    else{
+        require 'templates/cajalogueo.php';
+    }
+    $fotos = get_fotos_por_id_producto($id);
+    $publicacion = get_producto_por_id($id);
+    $publicacion['precio_producto'] = convert_num($publicacion['precio_producto']);
+    require 'templates/publicacion_producto_vendo.php';
 }
 
 ?>
