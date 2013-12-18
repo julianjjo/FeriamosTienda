@@ -38,6 +38,9 @@ elseif($uri == '/cerrarsesion'){
 elseif($uri == '/vender'){
 	vendo_action();
 }
+elseif($uri == '/buscar' && isset($_GET['buscar'])){
+	buscar_action($_GET['buscar']);
+}
 else {
     header('Status: 404 Not Found');
     echo '<html><body><h1>Page Not Found</h1></body></html>';

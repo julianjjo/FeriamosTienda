@@ -28,14 +28,38 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="./">Inicio</a></li>
-            <li><a href="./vender">Vender</a></li>
-            <li><a href="#contact">Comprar</a></li>
+            <li><a href="./vender">Vendo</a></li>
+            <li><a href="#contact">Busco</a></li>
+            <li><a href="#contact">Tarifas</a></li>
             <li><a href="#contact">Condiciones</a></li>
           </ul>                     
           <ul class="nav navbar-nav navbar-right">
             <?php echo $session ?>  
           </ul>
         </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="row">
+      <br>
+      <div class="col-md-1">
+        <br><br><br>
+      </div>
+      <div class="col-md-5">
+        <blockquote>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+          <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+        </blockquote>
+      </div>
+      <div class="col-md-5">
+        <form class="form-inline pull-right" role="form" action="./buscar" metodo="GET">
+          <div class="form-group">
+            <label class="sr-only" for="buscar">Buscar</label>
+            <input type="text" class="form-control" id="buscar" name="buscar" placeholder="Buscar">
+          </div>
+          <button type="submit" class="btn btn-default">Buscar</button>
+        </form>
+      </div>        
+      <div class="col-md-1">
       </div>
     </div>
     <?php echo $contenido ?>

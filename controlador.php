@@ -105,4 +105,16 @@ function publicacion_por_id_producto($id){
     require 'templates/publicacion_producto_vendo.php';
 }
 
+function buscar_action($busqueda){
+    $ingreso=ingreso_usuario();
+    if($ingreso==true){
+        require 'templates/sessionusuario.php';
+    }
+    else{
+        require 'templates/cajalogueo.php';
+    }
+    $consulta = consulta_buscar($busqueda);    
+    $publicaciones = busqueda($consulta);
+    require 'templates/buscar.php';
+}
 ?>

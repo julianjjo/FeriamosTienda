@@ -45,6 +45,7 @@
                 <div class="form-group">
                     <label>Estado del producto</label>
                     <select class="form-control" name="estado">
+                            <option value="Nuevo">Nuevo</option>
                             <option value="Excelente">Excelente</option>
                             <option value="Bueno">Bueno</option>
                             <option value="Regular">Regular</option>

@@ -21,7 +21,7 @@
 <div class="row">
     <div class="col-md-1">
     </div>
-    <div class="col-md-4 highlight">
+    <div class="col-md-4 highlight">  
         <div class="row">
             <div class="col-md-12 text-center">
                 <div id="galeria_main_image" class="inline-block"></div>                
@@ -108,7 +108,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <h2 class="text-center">Otra información</h2>
+        <h2 class="text-center">Información Adicional</h2>
     </div>
     <div class="col-md-1">
     </div>

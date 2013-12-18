@@ -267,6 +267,46 @@ function get_publicaciones_vendo_por_id_categoria($id_categoria,$posicion){
     return $publicaciones;
 }
 
+function consulta_buscar($busqueda){
+    $consulta = "SELECT * FROM vista_publicacion_producto WHERE otra_informacion_producto LIKE '%$busqueda%' OR nombre_producto LIKE '%$busqueda%' OR marca LIKE '%$busqueda%' OR modelo_producto LIKE '%$busqueda%' ";
+    $palabrasclave = explode(" ",$busqueda);
+    foreach ($palabrasclave as $palabraclave) {
+        $consulta .="OR otra_informacion_producto LIKE '%$palabraclave%' OR nombre_producto LIKE '%$palabraclave%' OR marca LIKE '%$palabraclave%' OR modelo_producto LIKE '%$palabraclave%'";
+    }
+    return $consulta;
+}
+
+function contador_consulta_buscar($busqueda){
+    $conexion = abrir_conexion_basededatos();
+
+    $consulta = "SELECT count(*) AS contador FROM vista_publicacion_producto WHERE otra_informacion_producto LIKE '%$busqueda%' OR nombre_producto LIKE '%$busqueda%' OR marca LIKE '%$busqueda%' OR modelo_producto LIKE '%$busqueda%' ";
+    $palabrasclave = explode(" ",$busqueda);
+    foreach ($palabrasclave as $palabraclave) {
+        $consulta .="OR otra_informacion_producto LIKE '%$palabraclave%' OR nombre_producto LIKE '%$palabraclave%' OR marca LIKE '%$palabraclave%' OR modelo_producto LIKE '%$palabraclave%'";
+    }
+
+    $contador= mysql_query($consulta,$conexion);
+
+    $cantidad_de_posiciones = mysql_fetch_array($contador);
+
+    return $publicaciones;
+}
+
+
+function busqueda($consulta){
+    $conexion = abrir_conexion_basededatos();
+    $publicaciones_busqueda= mysql_query($consulta,$conexion);
+
+    $publicaciones = array();
+    while ($row = mysql_fetch_assoc($publicaciones_busqueda)) {
+        $publicaciones[] = $row;
+    }
+
+    cerrar_conexion_basededatos($conexion);
+
+    return $publicaciones;
+}
+
 function set_usuario(){
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){        
         $conexion = abrir_conexion_basededatos();
@@ -311,6 +351,7 @@ function ingreso_usuario(){
     }
     return false;
 }
+
 function cerrar_sesion_usuario(){
      session_start();
      session_unset();
