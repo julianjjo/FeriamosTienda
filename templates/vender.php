@@ -16,7 +16,8 @@
   </div>
   <?php echo $barra ?>
   <div class="col-xs-12 col-md-7">
-    <h1 class="text-center">Ultimas publicaciones</h1>
+    <a href="./publicacionvendo" class="btn btn-success pull-right" role="button">Publique lo que desea vender</a><br>
+    <h1 class="text-center">Ultimas publicaciones</h1><hr>
     <?php foreach ($publicaciones as $publicacion): ?>
       <div class="list-group">
         <a href="./publicacionvendo?id=<?php echo $publicacion['id_producto']?>" class="list-group-item">

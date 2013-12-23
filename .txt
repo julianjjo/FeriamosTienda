@@ -1,4 +1,2 @@
 barra nueva encima con logo feriamos y registrese
-tentativo opcion para que la gente vincule videose
-en busco mostrar categoria, marca, estado, presupuesto, unidades, ciudad, información adicional.
-ultimas demandas.
+tentativo opcion para que la gente vincule videos

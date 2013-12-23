@@ -186,7 +186,7 @@ function get_categoria_por_id($id){
 function get_cantidad_productos_categoria($id_categoria){
     $conexion = abrir_conexion_basededatos();
 
-    $categoria_por_id = mysql_query("SELECT count(*) as cantidad FROM producto WHERE id_categoria='$id_categoria'",$conexion);
+    $categoria_por_id = mysql_query("SELECT count(*) as cantidad FROM vista_producto_vendo_por_fecha WHERE id_categoria='$id_categoria'",$conexion);
 
     $categoria = mysql_fetch_array($categoria_por_id);
 
@@ -267,12 +267,13 @@ function get_publicaciones_vendo_por_id_categoria($id_categoria,$posicion){
     return $publicaciones;
 }
 
-function consulta_buscar($busqueda){
+function consulta_buscar($busqueda,$posicion){
     $consulta = "SELECT * FROM vista_publicacion_producto WHERE otra_informacion_producto LIKE '%$busqueda%' OR nombre_producto LIKE '%$busqueda%' OR marca LIKE '%$busqueda%' OR modelo_producto LIKE '%$busqueda%' ";
     $palabrasclave = explode(" ",$busqueda);
     foreach ($palabrasclave as $palabraclave) {
-        $consulta .="OR otra_informacion_producto LIKE '%$palabraclave%' OR nombre_producto LIKE '%$palabraclave%' OR marca LIKE '%$palabraclave%' OR modelo_producto LIKE '%$palabraclave%'";
+        $consulta .="OR otra_informacion_producto LIKE '%$palabraclave%' OR nombre_producto LIKE '%$palabraclave%' OR marca LIKE '%$palabraclave%' OR modelo_producto LIKE '%$palabraclave%' ";
     }
+    $consulta.="LIMIT $posicion,10";
     return $consulta;
 }
 
@@ -282,14 +283,12 @@ function contador_consulta_buscar($busqueda){
     $consulta = "SELECT count(*) AS contador FROM vista_publicacion_producto WHERE otra_informacion_producto LIKE '%$busqueda%' OR nombre_producto LIKE '%$busqueda%' OR marca LIKE '%$busqueda%' OR modelo_producto LIKE '%$busqueda%' ";
     $palabrasclave = explode(" ",$busqueda);
     foreach ($palabrasclave as $palabraclave) {
-        $consulta .="OR otra_informacion_producto LIKE '%$palabraclave%' OR nombre_producto LIKE '%$palabraclave%' OR marca LIKE '%$palabraclave%' OR modelo_producto LIKE '%$palabraclave%'";
-    }
-
+        $consulta .="OR otra_informacion_producto LIKE '%$palabraclave%' OR nombre_producto LIKE '%$palabraclave%' OR marca LIKE '%$palabraclave%' OR modelo_producto LIKE '%$palabraclave%' ";
+    }    
     $contador= mysql_query($consulta,$conexion);
-
     $cantidad_de_posiciones = mysql_fetch_array($contador);
-
-    return $publicaciones;
+    $cantidad = $cantidad_de_posiciones['contador'];
+    return $cantidad;
 }
 
 
@@ -358,4 +357,61 @@ function cerrar_sesion_usuario(){
      session_destroy();
      header("Location: ./");
 }
+
+function set_demanda(){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $conexion = abrir_conexion_basededatos();
+        $nombre = $_POST['nombre'];
+        $marca = $_POST['marca'];
+        $categoria = $_POST['categoria'];
+        $unidades = $_POST['unidades'];
+        $precio = $_POST['precio'];
+        $otra_informacion = $_POST['otra_informacion'];
+        $id_comprador = $_SESSION['id_usuario'];
+        $fecha_actual = date("Y-m-d");      
+        $consulta = "INSERT INTO producto (id_producto,nombre_producto,marca,id_vendedor,id_categoria,unidades_producto,precio_producto,otra_informacion_producto,fecha_publicacion_producto,siVendo) VALUES ('','$nombre','$marca','$id_comprador','$categoria','$unidades','$precio','$otra_informacion','$fecha_actual','0')";
+        mysql_query($consulta,$conexion);
+        cerrar_conexion_basededatos($conexion);
+    }
+}
+
+function get_ultimas_publicaciones_busco(){
+    $conexion = abrir_conexion_basededatos();
+    $ultimas_publicaciones_busco = mysql_query("SELECT * FROM vista_publicacion_busco LIMIT 8",$conexion);
+
+    $publicaciones = array();
+    while ($row = mysql_fetch_assoc($ultimas_publicaciones_busco)) {     
+        $publicaciones[] = $row;
+    }
+    cerrar_conexion_basededatos($conexion);
+ 
+    return $publicaciones;
+}
+
+function get_cantidad_busco_categoria($id_categoria){
+    $conexion = abrir_conexion_basededatos();
+    $cantidad_busco_categoria = mysql_query("SELECT count(*) as contador FROM vista_publicacion_busco WHERE id_categoria='$id_categoria' LIMIT 8",$conexion);
+
+    $row = mysql_fetch_array($cantidad_busco_categoria);
+
+    $cantidad = $row['contador'];
+
+    cerrar_conexion_basededatos($conexion);
+ 
+    return $cantidad;
+}
+
+function get_busco_por_id_categoria($id_categoria,$cantidad_por_posicion){
+    $conexion = abrir_conexion_basededatos();
+    $busco_por_id_categoria = mysql_query("SELECT * FROM vista_publicacion_busco WHERE id_categoria='$id_categoria' LIMIT $cantidad_por_posicion,10",$conexion);
+
+    $publicaciones = array();
+    while ($row = mysql_fetch_assoc($busco_por_id_categoria)) {     
+        $publicaciones[] = $row;
+    }
+    cerrar_conexion_basededatos($conexion);
+ 
+    return $publicaciones;
+}
+
 ?>

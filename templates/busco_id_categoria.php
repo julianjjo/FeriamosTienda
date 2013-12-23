@@ -1,6 +1,6 @@
-<?php $title = 'Vender' ?>
+<?php $title = 'Busco' ?>
 
-<?php include 'barra_categorias.php' ?>
+<?php include 'barra_categorias_busco.php' ?>
 
 <?php ob_start() ?>
 <style type="text/css">
@@ -20,18 +20,18 @@
   </div>
   <?php echo $barra ?>
   <div class="col-xs-12 col-md-7">
-    <a href="./publicacionvendo" class="btn btn-success pull-right" role="button">Publique lo que desea vender</a><br>
+    <a href="./publicacionvendo" class="btn btn-success pull-right" role="button">Publique lo que desea comprar</a><br>
     <h1 class="text-center"><?php echo utf8_encode($categoria_id['nombre_categoria'])?></h1>
     <hr><br>
     <?php foreach ($publicaciones as $publicacion): ?>
       <div class="list-group">
-        <a href="./publicacionvendo?id=<?php echo $publicacion['id_producto']?>" class="list-group-item">
+        <a href="./publicacionbusco?id=<?php echo $publicacion['id_producto']?>" class="list-group-item">
           <div class="media">
-              <img class="media-object pull-left imagenes img-thumbnail" src="<?php echo $publicacion['path'] ?>">
             <div class="media-body">
-              <h4 class="media-heading"><?php echo $publicacion['nombre_producto'] ?></h4>
-              <p><strong>Valor: </strong> <?php echo $publicacion['precio_producto'] ?><p>
-              <p><strong>Unidades Disponibles: </strong> <?php echo $publicacion['unidades_producto'] ?><p>
+              <h4><strong><?php echo $publicacion['nombre_producto'] ?></strong></h4>
+              <p><strong>Marca: </strong> <?php echo $publicacion['marca'] ?><p>
+              <p><strong>Presupuesto: </strong> <?php echo $publicacion['precio_producto'] ?><p>
+              <p><strong>Unidades Nesesarias: </strong> <?php echo $publicacion['unidades_producto'] ?><p>
             </div>
           </div>  
         </a>

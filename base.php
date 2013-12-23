@@ -29,7 +29,7 @@
           <ul class="nav navbar-nav">
             <li><a href="./">Inicio</a></li>
             <li><a href="./vender">Vendo</a></li>
-            <li><a href="#contact">Busco</a></li>
+            <li><a href="./busco">Busco</a></li>
             <li><a href="#contact">Tarifas</a></li>
             <li><a href="#contact">Condiciones</a></li>
           </ul>                     
@@ -44,13 +44,13 @@
       <div class="col-md-1">
         <br><br><br>
       </div>
-      <div class="col-md-5">
+      <div class="col-xs-6 col-md-5">
         <blockquote>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
           <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
         </blockquote>
       </div>
-      <div class="col-md-5">
+      <div class="col-xs-6 col-md-5">
         <form class="form-inline pull-right" role="form" action="./buscar" metodo="GET">
           <div class="form-group">
             <label class="sr-only" for="buscar">Buscar</label>

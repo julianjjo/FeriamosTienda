@@ -38,8 +38,26 @@ elseif($uri == '/cerrarsesion'){
 elseif($uri == '/vender'){
 	vendo_action();
 }
+elseif($uri == '/buscar' && isset($_GET['buscar']) && isset($_GET['id'])){
+	buscar_action($_GET['buscar'],$_GET['id']);
+}
 elseif($uri == '/buscar' && isset($_GET['buscar'])){
-	buscar_action($_GET['buscar']);
+	buscar_action($_GET['buscar'],'0');
+}
+elseif ($uri == '/publicarbusco') {
+	publicar_busco_action();
+}
+elseif($uri == '/busco' && isset($_GET['id1']) && isset($_GET['id2'])){
+	busco_id_categoria_action($_GET['id1'],$_GET['id2']);
+}
+elseif ($uri == '/busco') {
+	busco_action();
+}
+elseif ($uri == '/publicacionbusco' && isset($_GET['id'])) {
+	publicacion_busco_action($_GET['id']);
+}
+elseif($uri == '/loginregistro'){
+	paginaloginregistro_action();
 }
 else {
     header('Status: 404 Not Found');

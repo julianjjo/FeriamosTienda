@@ -11,7 +11,7 @@ function publicar_producto_vendo_action()
         require 'templates/publicarvendo.php';
     }
     else{
-        header("Location: ./");
+        header("Location: ./loginregistro");
     }
 }
 
@@ -23,6 +23,11 @@ function login_action()
 function paginalogin_action()
 {   
     require 'templates/paginalogueo.php';
+}
+
+function paginaloginregistro_action()
+{   
+    require 'templates/logueomasregistrese.php';
 }
 
 function home_action()
@@ -105,7 +110,7 @@ function publicacion_por_id_producto($id){
     require 'templates/publicacion_producto_vendo.php';
 }
 
-function buscar_action($busqueda){
+function buscar_action($busqueda,$id){
     $ingreso=ingreso_usuario();
     if($ingreso==true){
         require 'templates/sessionusuario.php';
@@ -113,8 +118,79 @@ function buscar_action($busqueda){
     else{
         require 'templates/cajalogueo.php';
     }
-    $consulta = consulta_buscar($busqueda);    
-    $publicaciones = busqueda($consulta);
-    require 'templates/buscar.php';
+    $cantidad = contador_consulta_buscar($busqueda);    
+    if($cantidad>0){
+        $catidad_posicion = get_cantidad_de_posiciones($cantidad);
+        $cantidad_por_posicion = get_posicion_publicacion_por_categoria($id);
+        $cantidad_por_publicacion=cantidad_por_publicacion($cantidad,$cantidad_por_posicion);
+        $cantidad_anterior_por_publicacion=cantidad_anterior_por_publicacion($cantidad,$cantidad_por_posicion);    
+        $consulta = consulta_buscar($busqueda,$cantidad_por_posicion);
+        $publicaciones = busqueda($consulta);
+        require 'templates/buscar.php'; 
+    }
+    else{
+        require 'templates/no_hay_resultado.php';
+    }    
 }
+
+function publicar_busco_action(){
+    $ingreso=ingreso_usuario();
+    if($ingreso==true){
+        set_demanda();
+        require 'templates/sessionusuario.php';
+        $categorias = get_todas_categorias();
+        require 'templates/publicardemanda.php';
+    }
+    else{
+        header("Location: ./loginregistro");
+    }
+    
+}
+
+function busco_action(){
+     $ingreso=ingreso_usuario();
+    if($ingreso==true){
+        require 'templates/sessionusuario.php';
+    }
+    else{
+        require 'templates/cajalogueo.php';
+    }
+    $categorias = get_todas_categorias();
+    $publicaciones=get_ultimas_publicaciones_busco();
+    require 'templates/busco.php';
+}
+
+function busco_id_categoria_action($id1,$id2){
+    $ingreso=ingreso_usuario();
+    if($ingreso==true){
+        require 'templates/sessionusuario.php';
+    }
+    else{
+        require 'templates/cajalogueo.php';
+    }
+    $cantidad = get_cantidad_busco_categoria($id2);
+    $catidad_posicion = get_cantidad_de_posiciones($cantidad);
+    $cantidad_por_posicion = get_posicion_publicacion_por_categoria($id1);
+    $cantidad_por_publicacion=cantidad_por_publicacion($cantidad,$cantidad_por_posicion);
+    $cantidad_anterior_por_publicacion=cantidad_anterior_por_publicacion($cantidad,$cantidad_por_posicion);
+    $categoria_id = get_categoria_por_id($id2);
+    $categorias = get_todas_categorias();
+    $publicaciones=get_busco_por_id_categoria($id2,$cantidad_por_posicion);
+    require 'templates/busco_id_categoria.php';
+
+}
+
+function publicacion_busco_action($id){
+    $ingreso=ingreso_usuario();
+    if($ingreso==true){
+        require 'templates/sessionusuario.php';
+    }
+    else{
+        require 'templates/cajalogueo.php';
+    }
+    $publicacion = get_producto_por_id($id);
+    $publicacion['precio_producto'] = convert_num($publicacion['precio_producto']);
+    require 'templates/publicacion_busco.php';
+}
+
 ?>
