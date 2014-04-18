@@ -15,7 +15,7 @@
   <div class="col-xs-0 col-md-1">
   </div>
   <div class="col-md-10">
-    <h1 class="text-center">Resultados de la busqueda</h1>
+    <h2 class="text-center">Resultados de la busqueda</h2>
     <?php foreach ($publicaciones as $publicacion): ?>
       <div class="list-group">
         <a href="./publicacionvendo?id=<?php echo $publicacion['id_producto']?>" class="list-group-item">

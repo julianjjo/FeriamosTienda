@@ -20,9 +20,14 @@
   </div>
   <?php echo $barra ?>
   <div class="col-xs-12 col-md-7">
-    <a href="./publicacionvendo" class="btn btn-success pull-right" role="button">Publique lo que desea comprar</a><br>
-    <h1 class="text-center"><?php echo utf8_encode($categoria_id['nombre_categoria'])?></h1>
+    <a href="./publicarbusco" class="btn btn-success pull-right" role="button">Publique lo que desea comprar</a><br>
+    <h2 class="text-center"><?php echo utf8_encode($categoria_id['nombre_categoria'])?></h2>
     <hr><br>
+    <div class="row text-center">      
+    <?php if ($cantidad==0):?>
+          <a class="lead" href="/publicarbusco"><strong>Publique</strong> su <?php echo utf8_encode($categoria_id['nombre_categoria'])?> a Vender</a>
+    <?php endif;?>
+    </div>
     <?php foreach ($publicaciones as $publicacion): ?>
       <div class="list-group">
         <a href="./publicacionbusco?id=<?php echo $publicacion['id_producto']?>" class="list-group-item">
@@ -38,7 +43,7 @@
       </div>    
     <?php endforeach; ?>
     <div clas="row">
-      <div class="col-xs-8 col-md-6">
+      <div class="col-xs-8 col-md-6">        
         <ul class="pagination">
           <?php if ($id1>0):?>  
             <li><a href="/vender?id1=<?php echo $id1-1 ?>&id2=<?php echo $categoria_id['id_categoria']?>">&laquo;</a></li>
