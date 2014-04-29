@@ -3,8 +3,8 @@
  
 function abrir_conexion_basededatos()
 {
-    $conexion = mysql_connect('localhost', 'root', 'poloji');
-    mysql_select_db('Feriamos', $conexion);
+    $conexion = mysql_connect('localhost', 'remins45_julian', 'polojilop87');
+    mysql_select_db('remins45_feriamos', $conexion);
  
     return $conexion;
 }
@@ -313,7 +313,11 @@ function get_todos_sectores()
     cerrar_conexion_basededatos($conexion);
  
     return $tipos;
+<<<<<<< HEAD
 }*/
+=======
+}
+>>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
 
 function get_ultimas_publicaciones_vendo(){
     $conexion = abrir_conexion_basededatos();
@@ -762,6 +766,22 @@ function get_rol(){
 
     return $rol;
 }
+<<<<<<< HEAD
+=======
+function get_publicidad_aleatoria(){
+    $conexion = abrir_conexion_basededatos();
+    $consulta_publicidad_aleatoria = mysql_query("SELECT * FROM publicidad ORDER BY rand()");
+    $publicidad_aleatoria = array();
+    while ($row = mysql_fetch_assoc($consulta_publicidad_aleatoria)) {
+       $publicidad_aleatoria[]=$row;
+    }
+
+    
+    cerrar_conexion_basededatos($conexion);
+
+    return $publicidad_aleatoria;
+}
+>>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
 
 function get_publicaciones_mas_de_tres_meses(){
     $conexion = abrir_conexion_basededatos();
@@ -853,6 +873,7 @@ function crear_categoria(){
     echo mysql_error();
     cerrar_conexion_basededatos($conexion);
 }
+<<<<<<< HEAD
 function get_publicidad(){
     $conexion = abrir_conexion_basededatos();
     $consulta_publicidad = mysql_query("SELECT p.*, h.* FROM publicidad AS p INNER JOIN horario AS h ON p.id_publicidad = h.id_publicidad ORDER BY p.id_publicidad");
@@ -886,4 +907,6 @@ function get_publicidad_activa(){
     } 
     return $publicidad_activa;
 }
+=======
+>>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
 ?>

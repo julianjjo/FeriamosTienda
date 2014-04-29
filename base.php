@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
 <!-- Plantilla base -->
 <!DOCTYPE html>
 <html>
