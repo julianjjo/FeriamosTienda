@@ -36,20 +36,7 @@ function paginalogin_action()
 
 function home_action()
 {    
-<<<<<<< HEAD
     $publicidad_activa = get_publicidad_activa(); 
-=======
-    /*$fecha = strtotime("now");
-    $fecha1 = strtotime("+4 hours 2 seconds"); 
-    $horainicial = date( "h:i:s" , $fecha );
-    $horafinal = date( "h:i:s" , $fecha1);
-    if($horafinal>$horainicial){
-        echo "hora mayor".$horafinal;
-    }
-    else{
-        echo "hora menor".$horainicial;
-    }*/
->>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
     $ingreso=ingreso_usuario();
     if($ingreso==true){
         $usuario=get_usuario();
@@ -58,10 +45,6 @@ function home_action()
     else{
         require 'templates/cajalogueo.php';
     }
-<<<<<<< HEAD
-=======
-    $publicidades =  get_publicidad_aleatoria();
->>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
     $categorias_vendo=get_categorias_con_productos_vendo();
     $categorias_compro=get_categorias_con_productos_compro();
 	require 'templates/home.php';
@@ -81,10 +64,7 @@ function registrar_usuario_action()
 }
 
 function vendo_action(){
-<<<<<<< HEAD
     $publicidad_activa = get_publicidad_activa(); 
-=======
->>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
     $ingreso=ingreso_usuario();
     if($ingreso==true){
         $usuario=get_usuario();
@@ -291,10 +271,7 @@ function panel_de_administrador_action(){
         $ciudad = get_ciudad_id($usuario["ID_CIUDAD"]);        
         $departamentos = get_departamentos();
         $publicaciones = get_publiciones_vendo_id_usuario();
-<<<<<<< HEAD
         $publicidades  = get_publicidad();
-=======
->>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
         require 'templates/sessionusuario.php';
         require "templates/paneldeadministrador.php";     
     }

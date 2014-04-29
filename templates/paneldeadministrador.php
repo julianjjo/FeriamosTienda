@@ -180,11 +180,7 @@
           <li class=""><a href="#publicaciones" data-toggle="tab">Publicaciones</a></li>
           <li class=""><a href="#publicaciones_meses" data-toggle="tab">Publicaciones con mas de 3 meses</a>
           <li class=""><a href="#categorias" data-toggle="tab">Categorias</a></li>
-<<<<<<< HEAD
           <li class=""><a href="#publicida" data-toggle="tab">Publicidad</a></li>  
-=======
-          <li class=""><a href="#publicidad" data-toggle="tab">Publicidad</a>    
->>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
         </ul>
         <div id="myTabContent" class="tab-content">
           <div class="tab-pane fade active in" id="perfil">
@@ -292,22 +288,14 @@
                 <?php endforeach;?> 
               </table>
           </div>
-<<<<<<< HEAD
           <div class="tab-pane fade" id="categorias"><br>
             <div class="row text-right">
               <div class="col-md-12">
                 <button class="btn btn-success" data-toggle="modal" data-target="#adiccionarcategoriamodal">Adicionar nueva Categoria</button>
-=======
-          <div class="tab-pane fade" id="publicidad"><br>
-            <div class="row text-right">
-              <div class="col-md-12">
-                <button class="btn btn-default">Adicionar nueva publicidad</button>
->>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
               </div>
             </div>
             <div class="row">
               <div class="col-md-12"><br>
-<<<<<<< HEAD
                 <table class="table table-hover">
                   <tr>
                     <th class="text-center">Nombre de la Categoria</th>
@@ -327,43 +315,12 @@
               <div class="col-md-12">
                 <button class="btn btn-success" data-toggle="modal" data-target="#nuevapublicidad">Nueva Publicidad</button>
                 <button class="btn btn-success" data-toggle="modal" data-target="#nuevaempresa">Nueva Empresa</button>
-=======
-                 <table class="table table-hover">
-                <tr>
-                  <th class="text-center">Publicidad</th>
-                  <th class="text-center">Fecha de inicio</th>
-                  <th class="text-center">Fecha de fin</th>
-                  <th class="text-center">Hora de inicio</th>
-                  <th class="text-center">Hora de fin</th>
-                  <th></th>
-                <?php foreach ($publicidades as $publicidad):  ?>
-                </tr> 
-                  <td><?php echo $publicacion['nombre_producto']?></td>
-                  <?php if ($publicacion["siVendo"]=="1"):?>
-                  <td>Vendo</td>
-                  <?php elseif ($publicacion["siVendo"]=="0"):?>
-                  <td>Compro</td>
-                  <?php endif;?>
-                   <td><button class="btn btn-primary">Enviar correo</button></td>
-                  <td><button class="btn btn-warning" onclick="eliminar_publicacion(this,<?php echo $publicacion["id_producto"]?>)">Eliminar</button></td>
-                </tr>        
-                <?php endforeach;?> 
-              </table>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="categorias"><br>
-            <div class="row text-right">
-              <div class="col-md-12">
-                <button class="btn btn-default" data-toggle="modal" data-target="#adiccionarcategoriamodal">Adicionar nueva Categoria</button>
->>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
               </div>
             </div>
             <div class="row">
               <div class="col-md-12"><br>
                  <table class="table table-hover">
                 <tr>
-<<<<<<< HEAD
                   <th class="text-center">Empresa</th>
                   <th class="text-center">Fecha de inicio</th>
                   <th class="text-center">Fecha de fin</th>
@@ -379,16 +336,6 @@
                     <td><?php echo $publicidad['hora_de_fin'] ?></td>
                   </tr>
                 <?php endforeach;?>
-=======
-                  <th class="text-center">Nombre de la Categoria</th>
-                  <th></th>
-                <?php foreach ($categorias as $categoria):  ?>
-                </tr> 
-                  <td><?php echo utf8_encode($categoria['nombre_categoria'])?></td>
-                  <td><button class="btn btn-warning" onclick="eliminar_categoria(this,<?php echo $categoria["id_categoria"]?>)">Eliminar</button></td>
-                </tr>        
-                <?php endforeach;?> 
->>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
               </table>
               </div>
             </div>
@@ -568,7 +515,6 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal --> 
-<<<<<<< HEAD
     <div class="modal fade" id="adiccionarcategoriamodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -613,8 +559,6 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->    
-=======
->>>>>>> 657047b76b3003a5ca94bc76c27d735b329564f6
   </div>
 <?php $contenido = ob_get_clean() ?>
  
