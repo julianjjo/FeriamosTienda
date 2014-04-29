@@ -1,4 +1,5 @@
-<?php $title = 'Busco' ?>
+<?php require "templates/publicidad.php"?>
+<?php $title = 'Comprar' ?>
 
 <?php include 'barra_categorias_busco.php' ?>
 
@@ -13,11 +14,11 @@
 <?php ob_start() ?>
 <div class="row">
   <div class="col-xs-0 col-md-1">
-  </div>
+  </div>  
   <?php echo $barra ?>
-  <div class="col-xs-12 col-md-7">
-    <a href="./publicacionvendo" class="btn btn-success pull-right" role="button">Publique lo que desea comprar</a><br>
-    <h1 class="text-center">Ultimas publicaciones</h1>
+  <div class="col-xs-12 col-md-5">
+    <a href="./publicarbusco" class="btn btn-success pull-right" role="button">Publique lo que desea comprar</a><br>
+    <h2 class="text-center">Ultimas publicaciones</h2>
     <?php foreach ($publicaciones as $publicacion): ?>
       <div class="list-group">
         <a href="./publicacionbusco?id=<?php echo $publicacion['id_producto']?>" class="list-group-item">
@@ -33,7 +34,8 @@
       </div> 
     <?php endforeach; ?>
   </div>
-  <div class="col-xs-0 col-md-1">
+  <div class="col-xs-0 col-md-3">
+    <?php echo $publicidad?>
   </div>
 </div>
   

@@ -1,6 +1,26 @@
 <?php $title = 'Ingresa' ?>
- 
- <?php ob_start() ?>
+
+<?php ob_start() ?>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#ingresonovalido").addClass("hidden");
+    $("#ingresar").click(function() {
+      $.post("/login",$("#formulario").serialize())
+      .done(function(datos) 
+      {
+        if(datos=='ingreso'){
+          window.history.go(-1);
+        }
+        else{
+          $("#ingresonovalido").removeClass("hidden");
+        }
+      });
+    })
+  });
+</script>
+<?php $script = ob_get_clean() ?>  
+
+<?php ob_start() ?>
 	<style type="text/css">
       body {
         padding-top: 40px;
@@ -37,10 +57,13 @@
 
 <?php ob_start() ?>
 	<div class="container">
-    <form action="/login" method="POST" role="form" class="form-signin">
+    <form role="form" class="form-signin" id="formulario">
       <h2 class="form-signin-heading">Ingresar a mi cuenta</h2>
+      <div class="alert alert-danger hidden" id="ingresonovalido">
+          <p>El email o la contraseña no son validas</p>
+      </div>
        <div class="form-group">
-        <input type="email" class="form-control" name="email" placeholder="Email">                  
+          <input type="email" class="form-control" name="email" placeholder="Email">   
       </div>
       <div class="form-group">
         <input type="password" class="form-control" name="password" placeholder="Contraseña">
@@ -48,9 +71,9 @@
       <label class="checkbox">
         <input type="checkbox" value="remember-me"> Recordarme
       </label>
-      <button type="submit" class="btn btn-large btn-primary">Ingresar</button><br>
+      <button type="button" id="ingresar" class="btn btn-large btn-primary">Ingresar</button><br>
       <hr>
-      <p class="text-center">Si no tiene cuenta de usuario <a href="./loginregistro" class="btn btn-primary">Registrese</a></p>
+      <p class="text-center">Si no tiene cuenta <a href="./loginregistro" class="btn btn-primary">Registrese</a></p>
     </form>
     
   </div>

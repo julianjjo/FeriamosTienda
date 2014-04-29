@@ -8,6 +8,7 @@ require_once 'controlador.php';
 $uri = $_SERVER['REQUEST_URI'];
 $urls = explode('?', $uri);
 $uri = $urls[0];
+
 if ($uri == '/') {
     home_action();
 } 
@@ -28,9 +29,6 @@ elseif($uri == '/paginalogin'){
 }
 elseif($uri == '/registro'){
 	registrar_usuario_action();
-}
-elseif($uri == '/registrado'){
-	usuario_registrado_action();
 }
 elseif($uri == '/cerrarsesion'){
 	cerrar_sesion_action();
@@ -59,8 +57,51 @@ elseif ($uri == '/publicacionbusco' && isset($_GET['id'])) {
 elseif($uri == '/loginregistro'){
 	paginaloginregistro_action();
 }
+elseif($uri == '/loginerror'){
+	echo "error";
+}
+elseif ($uri == '/paneldeusuario') {
+	panel_de_usuario_action();
+}
+elseif ($uri == '/cambiocorreo'){
+	cambio_correo_action();
+}
+elseif ($uri == '/valcontra') {
+	validar_contrasena_action();
+}
+elseif($uri == '/cambiarcontra'){
+	cambiar_contrasena_action();
+}
+elseif ($uri == '/cambiotelefono') {
+	cambiar_telefono_action();
+}
+elseif ($uri == '/cambiodireccion') {
+	cambiar_direccion_action();
+}
+elseif ($uri == '/departamento' && isset($_GET['id'])) {
+	departamento_id_action($_GET['id']);
+}
+elseif ($uri == '/eliminar_publicacion' && isset($_GET['id'])) {
+	eliminar_publicacion_action($_GET['id']);
+}
+elseif ($uri == '/eliminar_categoria' && isset($_GET['id'])) {
+	eliminar_categoria_action($_GET['id']);
+}
+elseif ($uri == '/paneldeadministrador') {
+	panel_de_administrador_action();
+}
+elseif ($uri == '/modificarporid') {
+	modificar_por_id_action();
+}
+elseif ($uri == '/modificarporidformulario' && isset($_GET['vendo']) && isset($_GET['id'])) {
+	modificar_por_id_formulario_action($_GET['id'],$_GET['vendo']);
+}
+elseif ($uri == '/crear_categoria') {
+	crear_categoria_action();
+}
 else {
     header('Status: 404 Not Found');
     echo '<html><body><h1>Page Not Found</h1></body></html>';
 }
+
 ?>
