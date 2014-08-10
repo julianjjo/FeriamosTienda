@@ -149,9 +149,25 @@
     function add_categoria(){
       $.post( "/crear_categoria", $("#formcategorias").serialize())
         .done(function(datos) {
-          alert(datos);
+          window.location.href='/paneldeadministrador';
         });
-      window.location.href='/paneldeadministrador';
+    }
+    function add_publicidad(){
+      $.post( "/crear_publicidad", $("#formpublicidad").serialize())
+        .done(function(datos) {
+          window.location.href='/paneldeadministrador';
+        });
+    }
+    function eliminar_publicidad(button,id_publicacion){ 
+      var i=0;
+      var respuesta=confirm("Desea eliminar la publicidad");     
+      if (respuesta==true) {
+        tr = button.parentNode.parentNode;      
+        while(i<tr.childNodes.length){
+          tr.removeChild(tr.childNodes[i]);
+        }
+        $.get( "/eliminarpublicidad",{id:id_publicacion});
+      }
     }
 </script>
 <?php $script = ob_get_clean() ?> 
@@ -326,6 +342,7 @@
                   <th class="text-center">Fecha de fin</th>
                   <th class="text-center">Hora de inicio</th>
                   <th class="text-center">Hora de fin</th>
+                  <th class="text-center"></th>
                 </tr>
                 <?php foreach ($publicidades as $publicidad):  ?>
                   <tr>
@@ -334,6 +351,7 @@
                     <td><?php echo $publicidad['fecha_fin'] ?></td>
                     <td><?php echo $publicidad['hora_de_inicio'] ?></td>
                     <td><?php echo $publicidad['hora_de_fin'] ?></td>
+                    <td><button class="btn btn-danger" onclick="eliminar_publicidad(this,<?php echo $publicidad['id_publicidad']?>)">Eliminar</button></td>
                   </tr>
                 <?php endforeach;?>
               </table>
@@ -538,23 +556,143 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->    
     <div class="modal fade" id="nuevaempresa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">        
+        <div class="modal-content">          
+          <form id="formempresa" enctype="multipart/form-data" method="post" action="/crear_empresa">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Nueva empresa</h4>
+            </div>
+            <div class="modal-body" id="contenido">
+                <div class="form-group"> 
+                  <label for="nombre_empresa">Nombre de la empresa:</label>               
+                  <input type="text" id="nombre_empresa" class="form-control" name="nombre_empresa" placeholder="Nombre de la empresa">
+                </div>
+                <div class="form-group"> 
+                  <label for="nombre_responsable">Nombre del responsable:</label>               
+                  <input type="text" id="nombre_responsable" class="form-control" name="nombre_responsable" placeholder="Nombre del responsable">
+                </div>
+                <ul id="myTab" class="nav nav-pills">
+                  <li class="active"><a href="#link" data-toggle="tab">Link imagen</a></li>
+                  <li class=""><a href="#subir" data-toggle="tab">Subir imagen</a></li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                  <div class="tab-pane fade active in" id="link">
+                    <div class="form-group"> 
+                      <label for="link_imagen">Dirrección web de la imagen:</label>               
+                      <input type="url" id="link_imagen" class="form-control" name="link_imagen" placeholder="http://www.ejemplo.com/imagen.jpg">
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="subir">
+                    <div class="form-group"> 
+                      <label for="imagen">Imagen: </label>
+                      <input type="file" id="imagen" name="imagen">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group"> 
+                  <label for="dirrecion_web">Dirrección web de la empresa:</label>               
+                  <input type="url" id="dirrecion_web" class="form-control" name="dirrecion_web" placeholder="http://www.ejemplo.com">
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+              <input type="submit" class="btn btn-primary" value="Guardar Cambios">
+            </div>          
+          </form>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->    
+  </div>
+  <div class="modal fade" id="nuevapublicidad" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" >&times;</button>
-            <h4 class="modal-title" id="myModalLabel">Nueva empresa</h4>
+            <h4 class="modal-title" id="myModalLabel">Nueva publicidad</h4>
           </div>
           <div class="modal-body" id="contenido">
-            <form id="formcategorias">
+            <form id="formpublicidad">
               <div class="form-group"> 
-                <label for="nombre_empresa">Nombre de empresa:</label>               
-                <input type="text" id="nombre_empresa" class="form-control" name="nombre_empresa" placeholder="Nombre de empresa">
+                <label for="empresa">Empresa:</label>               
+                <select class="form-control" id='empresa' name='empresa'>
+                  <option value="">Seleccione una empresa</option>
+                  <?php foreach ($empresas as $empresa): ?>
+                    <option value="<?php echo $empresa['id_empresa']?>"><?php echo $empresa['empresa']?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div> 
+              <div class="form-group"> 
+                <label>Hora inicial:</label>        
+                <div class="row">
+                  <div class="col-md-4">                    
+                    <select class="form-control" name="horaincial">
+                      <option value="">Hora</option>
+                      <?php for ($i=0; $i < 25; $i++): ?>
+                      <option value="<?php echo sprintf("%02d",$i)?>"><?php echo sprintf("%02d",$i)?></option>
+                      <?php endfor;?>
+                    </select>
+                  </div>
+                  <div class="col-md-4">                    
+                    <select class="form-control" name="minutoincial">
+                      <option value="">Minutos</option>
+                      <?php for ($i=0; $i < 60; $i++): ?>
+                      <option value="<?php echo sprintf("%02d",$i)?>"><?php echo sprintf("%02d",$i)?></option>
+                      <?php endfor;?>
+                    </select>
+                  </div>
+                  <div class="col-md-4">                    
+                    <select class="form-control" name="segundoincial">
+                      <option value="">Segundos</option>
+                      <?php for ($i=0; $i < 60; $i++): ?>
+                      <option value="<?php echo sprintf("%02d",$i)?>"><?php echo sprintf("%02d",$i)?></option>
+                      <?php endfor;?>
+                    </select>
+                  </div>
+                </div>       
+              </div>  
+              <div class="form-group"> 
+                <label>Hora final:</label>        
+                <div class="row">
+                  <div class="col-md-4">                    
+                    <select class="form-control" name="horafinal">
+                      <option value="">Hora</option>
+                      <?php for ($i=0; $i < 25; $i++): ?>
+                      <option value="<?php echo sprintf("%02d",$i)?>"><?php echo sprintf("%02d",$i)?></option>
+                      <?php endfor;?>
+                    </select>
+                  </div>
+                  <div class="col-md-4">                    
+                    <select class="form-control" name="minutofinal">
+                      <option value="">Minutos</option>
+                      <?php for ($i=0; $i < 60; $i++): ?>
+                      <option value="<?php echo sprintf("%02d",$i)?>"><?php echo sprintf("%02d",$i)?></option>
+                      <?php endfor;?>
+                    </select>
+                  </div>
+                  <div class="col-md-4">                    
+                    <select class="form-control" name="segundofinal">
+                      <option value="">Segundos</option>
+                      <?php for ($i=0; $i < 60; $i++): ?>
+                      <option value="<?php echo sprintf("%02d",$i)?>"><?php echo sprintf("%02d",$i)?></option>
+                      <?php endfor;?>
+                    </select>
+                  </div>
+                </div>       
               </div>
+              <div class="form-group"> 
+                <label for="fechaincial">Fecha inicial:</label>        
+                <input type="date" class="form-control" id="fechaincial" name="fechaincial">  
+              </div>       
+              <div class="form-group"> 
+                <label for="fechaincial">Fecha final:</label>        
+                <input type="date" class="form-control" id="fechafinal" name="fechafinal">  
+              </div>               
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
-            <button type="button" class="btn btn-primary" onclick="add_categoria()">Guardar Cambios</button>
+            <button type="button" class="btn btn-primary" onclick="add_publicidad()">Guardar Cambios</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

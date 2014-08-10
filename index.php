@@ -1,10 +1,10 @@
 <?php
 // index.php
  
-// carga e inicia algunas librerÃ­as globales
+// carga e inicia algunas librerias globales
 require_once 'modelo.php';
 require_once 'controlador.php';
-// encamina la peticiÃ³n internamente
+// encamina la petici¨®n internamente
 $uri = $_SERVER['REQUEST_URI'];
 $urls = explode('?', $uri);
 $uri = $urls[0];
@@ -98,6 +98,15 @@ elseif ($uri == '/modificarporidformulario' && isset($_GET['vendo']) && isset($_
 }
 elseif ($uri == '/crear_categoria') {
 	crear_categoria_action();
+}
+elseif ($uri == '/crear_empresa') {
+	crear_empresa_action();
+}
+elseif ($uri == '/crear_publicidad') {
+	crear_publicidad_action();
+}
+elseif ($uri == '/eliminarpublicidad' && isset($_GET['id'])) {
+	eliminarpublicidad_action($_GET['id']);
 }
 else {
     header('Status: 404 Not Found');

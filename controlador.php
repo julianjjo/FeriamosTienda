@@ -264,7 +264,8 @@ function eliminar_publicacion_action($id_publicacion){
 function panel_de_administrador_action(){
     $ingreso=ingreso_usuario();
     if($ingreso==true){
-        $usuario=get_usuario();        
+        $usuario=get_usuario(); 
+        $empresas = get_empresas();        
         $categorias = get_todas_categorias();
         $publicaciones_meses = get_publicaciones_mas_de_tres_meses();
         $departamento = get_departamento_id($usuario["ID_DEPARTAMENTO"]);
@@ -310,5 +311,14 @@ function eliminar_categoria_action($id_categoria){
 }
 function crear_categoria_action(){
     crear_categoria();
+}
+function crear_empresa_action(){
+    crear_empresa();
+}
+function crear_publicidad_action(){
+    crear_publicidad();
+}
+function eliminarpublicidad_action($id_publicidad){
+    eliminarpublicidad($id_publicidad);
 }
 ?>

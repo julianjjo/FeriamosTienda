@@ -3,8 +3,8 @@
  
 function abrir_conexion_basededatos()
 {
-    $conexion = mysql_connect('localhost', 'root', 'poloji');
-    mysql_select_db('Feriamos', $conexion);
+    $conexion = mysql_connect('localhost', 'remins45_julian', 'poloji');
+    mysql_select_db('remins45_feriamos', $conexion);
  
     return $conexion;
 }
@@ -855,7 +855,7 @@ function crear_categoria(){
 }
 function get_publicidad(){
     $conexion = abrir_conexion_basededatos();
-    $consulta_publicidad = mysql_query("SELECT p.*, h.* FROM publicidad AS p INNER JOIN horario AS h ON p.id_publicidad = h.id_publicidad ORDER BY p.id_publicidad");
+    $consulta_publicidad = mysql_query("SELECT em.*, p.* FROM empresa AS em INNER JOIN publicidad AS p ON em.id_empresa=p.id_empresa ORDER BY p.id_publicidad");
     while ($row= mysql_fetch_assoc($consulta_publicidad)) {
         $publicidades[]=$row;
     }
@@ -866,10 +866,10 @@ function get_publicidad(){
 
 function get_publicidad_aleatoria(){
     $conexion = abrir_conexion_basededatos();
-    $consulta_publicidad_aleatoria = mysql_query("SELECT p.*, h.* FROM publicidad AS p INNER JOIN horario AS h ON p.id_publicidad = h.id_publicidad ORDER BY rand()");
+    $consulta_publicidad_aleatoria = mysql_query("SELECT em.*, p.* FROM empresa AS em INNER JOIN publicidad AS p ON em.id_empresa=p.id_empresa ORDER BY rand()");
     $publicidad_aleatoria = array();
-    while ($row = mysql_fetch_assoc($consulta_publicidad_aleatoria)) {
-       $publicidad_aleatoria[]=$row;
+    while ($row = mysql_fetch_assoc($consulta_publicidad_aleatoria)) {        
+        $publicidad_aleatoria[]=$row;
     }        
     cerrar_conexion_basededatos($conexion);
     return $publicidad_aleatoria;
@@ -885,5 +885,129 @@ function get_publicidad_activa(){
         }
     } 
     return $publicidad_activa;
+}
+function crear_empresa(){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $conexion = abrir_conexion_basededatos();
+        $empresa = $_POST['nombre_empresa'];
+        $responsable = $_POST['nombre_responsable'];
+        $dirreccion_web = $_POST['dirrecion_web'];
+        if (isset($_POST['link_imagen']) && $_POST['link_imagen']!='') {
+            $link_imagen = $_POST['link_imagen'];
+            $consulta_crear_empresa = mysql_query("INSERT INTO empresa VALUES ('','$empresa','$responsable','$link_imagen','$dirreccion_web')");
+            if(!mysql_error()){
+                header("Location: /paneldeadministrador");
+            }
+        }
+        elseif (isset($_FILES["imagen"])) {
+            $foto = $_FILES["imagen"]["tmp_name"];
+            $nombre = $_FILES["imagen"]["name"];         
+            $imagen_tipo = $_FILES["imagen"]["type"];  
+            $partes_nombre=explode('.', $nombre);
+            $tipo_de_foto=$partes_nombre[1];
+            $nombre=md5(uniqid(time())).".".$tipo_de_foto;      
+            $destino ="publicidad/".$nombre;
+            move_uploaded_file($foto, $destino);
+            list($width, $height) = getimagesize($destino);
+            $maxdimension = 500;
+            if($width>$height) {
+                // es mas ancha que alta 
+                if($width<$maxdimension) {
+                    // es mas pequena de lo que queremos 
+                    $percent = 1;
+                } else {
+                    // calculamos la proporcion 
+                    $percent = $maxdimension / $width;
+                }
+            } 
+            else {
+                // es mas alta que ancha 
+                if($height<$maxdimension) {
+                    // es mas pequena de lo que queremos 
+                    $percent = 1;
+                } 
+                else {
+                    // calculamos la proporcion 
+                    $percent = $maxdimension / $height;
+                }
+            }
+            // calculamos las nuevas dimensiones
+            $newwidth = $width * $percent;
+            $newheight = $height * $percent;
+            // Crear imagenreducida y cargar imagen fuente
+            $reducida = imagecreatetruecolor($newwidth, $newheight);
+            //tipo de imagen
+            switch ( $imagen_tipo ){
+              case "image/jpg":
+              case "image/jpeg":
+                $original = imagecreatefromjpeg( $destino );
+                break;
+              case "image/png":
+                $original = imagecreatefrompng( $destino );
+                break;
+              case "image/gif":
+                $original = imagecreatefromgif( $destino );
+                break;
+            }
+            // copiar la original con nuevas dimensiones
+            imagecopyresampled($reducida, $original, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+            unlink($destino);
+            switch ( $imagen_tipo ){
+              case "image/jpg":
+              case "image/jpeg":
+                imagejpeg($reducida, $destino, 75 );
+                break;
+              case "image/png":
+                imagepng($reducida, $destino, 75 );
+                break;
+              case "image/gif":
+                imagegif($reducida, $destino, 75 );
+                break;
+            } 
+            $consulta_crear_empresa = mysql_query("INSERT INTO empresa VALUES ('','$empresa','$responsable','
+            $destino','$dirreccion_web')");
+            if(!mysql_error()){
+                header("Location: /paneldeadministrador");
+            }
+        }       
+        cerrar_conexion_basededatos($conexion);
+    }
+}
+function get_empresas(){
+    $conexion = abrir_conexion_basededatos();
+    $consulta_crear_empresa = mysql_query("SELECT * FROM empresa");
+    $empresas = array();
+    while ($row = mysql_fetch_assoc($consulta_crear_empresa)) {
+       $empresas[]=$row;
+    }    
+    echo mysql_error();
+    cerrar_conexion_basededatos($conexion);
+    return $empresas;
+}
+function crear_publicidad(){
+    $conexion = abrir_conexion_basededatos();
+    $empresa = $_POST['empresa'];
+    $horaincial = $_POST['horaincial'];
+    $minutoincial = $_POST['minutoincial'];    
+    $segundoincial = $_POST['segundoincial'];
+    $horafinal = $_POST['horafinal'];
+    $minutofinal = $_POST['minutofinal'];
+    $segundofinal = $_POST['segundofinal'];
+    $fechaincial = $_POST['fechaincial'];
+    $fechafinal = $_POST['fechafinal'];
+    $horai = $horaincial.":".$minutoincial.":".$segundoincial;
+    $horaf = $horafinal.":".$minutofinal.":".$segundofinal;
+    mysql_query("INSERT INTO publicidad VALUES('','$empresa','$horai','$horaf','$fechaincial','$fechafinal')");
+    cerrar_conexion_basededatos($conexion);
+}
+function eliminarpublicidad($id_publicidad){
+    $conexion = abrir_conexion_basededatos();
+    mysql_query("DELETE FROM publicidad WHERE id_publicidad='$id_publicidad'");
+    if(!mysql_error()){
+    }
+    else{        
+        echo mysql_error();
+    }
+    cerrar_conexion_basededatos($conexion);
 }
 ?>
