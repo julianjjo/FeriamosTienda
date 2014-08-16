@@ -1,5 +1,5 @@
 <?php 
-	require '../modelo.php';
+	require 'modelo.php';
 	class ConexionTest extends PHPUnit_Framework_TestCase
 	{
 		protected static $conexion;
