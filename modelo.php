@@ -3,8 +3,8 @@
  
 function abrir_conexion_basededatos()
 {
-    $conexion = mysql_connect('localhost', 'remins45_julian', 'poloji');
-    mysql_select_db('remins45_feriamos', $conexion);
+    $conexion = mysql_connect('localhost', 'root', 'poloji');
+    mysql_select_db('feriamos', $conexion);
  
     return $conexion;
 }
